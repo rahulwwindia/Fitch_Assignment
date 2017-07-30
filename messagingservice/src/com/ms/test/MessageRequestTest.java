@@ -1,6 +1,5 @@
 package com.ms.test;
 
-import org.apache.log4j.Logger;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -16,8 +15,6 @@ import com.ms.model.Message;
  */
 public class MessageRequestTest {
 
-	/** The Constant logger. */
-	final static Logger logger = Logger.getLogger(MessageRequestTest.class);
 
 	/**
 	 * Gets the message.
@@ -25,9 +22,8 @@ public class MessageRequestTest {
 	 * @return the message
 	 */
 	@Test
-	@Ignore
+	//@Ignore
 	public void getMessage() {
-		logger.info("get message rest service called ");
 		TestUtility.getMessageClinet("red");
 	}
 
@@ -35,9 +31,8 @@ public class MessageRequestTest {
 	 * Adds the message.
 	 */
 	@Test
-	@Ignore
+	//@Ignore
 	public void addMessage() {
-		logger.info("get message rest service called ");
 		Message message = new Message("Red is the ultimate cure for sadness.", "red", 1);
 		TestUtility.addMessageClient(message);
 	}
@@ -61,7 +56,7 @@ public class MessageRequestTest {
 		try {
 			Thread.currentThread().sleep(2000);
 		} catch (InterruptedException e) {
-			logger.error("Sorry, thread got interrupted!", e);
+			e.printStackTrace();
 		}
 	}
 

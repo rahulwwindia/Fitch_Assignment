@@ -10,8 +10,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import org.apache.log4j.Logger;
-
 import com.google.gson.Gson;
 import com.ms.model.Constants;
 import com.ms.model.Message;
@@ -28,8 +26,6 @@ import com.ms.model.MessageValidator;
 @Path("/message")
 public class MessageProducer {
 
-	final static Logger logger = Logger.getLogger(MessageProducer.class);
-
 	/**
 	 * Adds the message.
 	 *
@@ -41,8 +37,6 @@ public class MessageProducer {
 	@Path("/addMessage")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response addMessage(String data) {
-
-		logger.info("Web service addMessage called to add message in queue");
 
 		Gson gson = new Gson();
 		Status status = null;
