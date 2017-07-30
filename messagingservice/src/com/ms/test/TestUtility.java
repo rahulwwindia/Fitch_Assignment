@@ -8,6 +8,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.apache.log4j.Logger;
+
 import com.google.gson.Gson;
 import com.ms.model.Message;
 /**
@@ -18,6 +20,8 @@ import com.ms.model.Message;
 */
 public class TestUtility {
 	
+	final static Logger logger = Logger.getLogger(TestUtility.class);
+
 	/**
 	 * Consume restful web service and add the message in the queue.
 	 *
@@ -26,7 +30,7 @@ public class TestUtility {
 	public static void addMessageClient(Message message) {
 		
 		try {
-
+				logger.info("Consuming add message restful webservice");
 				URL url = new URL("http://localhost:8080/messagingservice/rest/message/addMessage");
 				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 				conn.setDoOutput(true);
@@ -41,17 +45,16 @@ public class TestUtility {
 				os.flush();
 
 				if (conn.getResponseCode() == HttpURLConnection.HTTP_CREATED) {
-					throw new RuntimeException("Failed : HTTP error code : "
-						+ conn.getResponseCode());
+					logger.error("Failed : HTTP error code : "+ conn.getResponseCode(), new RuntimeException("Failed : HTTP error code : "+ conn.getResponseCode()));
 				}
 
 				BufferedReader br = new BufferedReader(new InputStreamReader(
 						(conn.getInputStream())));
 
 				String output;
-				System.out.println("Output from Server .... \n");
+
 				while ((output = br.readLine()) != null) {
-					System.out.println(output);
+					logger.info("Response :"+output);
 				}
 
 				conn.disconnect();

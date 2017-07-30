@@ -2,9 +2,8 @@ package com.ms.service;
 
 import java.util.Map;
 import java.util.Queue;
-import java.util.concurrent.BlockingQueue;
 
-import javax.swing.plaf.synth.SynthSpinnerUI;
+import org.apache.log4j.Logger;
 
 import com.ms.model.Constants;
 import com.ms.model.Message;
@@ -25,6 +24,8 @@ import com.ms.model.MessageValidator;
  */
 public class MessagingServiceSystem {
 	
+	final static Logger logger = Logger.getLogger(MessagingServiceSystem.class);
+
 	public static MessagingServiceSystem serviceInstance ;
 
 
@@ -66,9 +67,11 @@ public class MessagingServiceSystem {
 				}
 				responseString = Constants.ADD_SUCCESS+ " Message :"+message.getMessageDescription() +"  Added In Queue on Time:"+message.getTimestamp();
 			} else {
+				logger.info("queue is not available for requested message type ");
 				responseString = Constants.QUEUE_NOT_AVAILABLE;
 			}
 		} else {
+			logger.info("Invalid Request ");
 			responseString = Constants.INVALID_REQUEST;
 		}
 		return responseString;
@@ -92,10 +95,12 @@ public class MessagingServiceSystem {
 				}
 					
 			}else{
+				logger.info("queue is not available for requested message type ");
 				return null;
 			}
 		}
 		}
+		logger.info("Invalid Message type :"+type);
 		return null;
 	}
 
