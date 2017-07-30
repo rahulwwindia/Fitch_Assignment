@@ -9,8 +9,8 @@ import java.util.Arrays;
  * message priority (valid values: [1, 2, 3])
  * 
  * @author Rahul Mahajan
- * @version
- * @since
+ * @version 1.0
+ * @since 07-28-2017
  *
  */
 public class MessageValidator {
