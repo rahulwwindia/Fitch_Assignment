@@ -23,22 +23,14 @@ import com.ms.model.MessageValidator;
 public class MessagingServiceSystem {
 	
 
-	public static MessagingServiceSystem serviceInstance ;
+	public static MessagingServiceSystem serviceInstanceToAdd ;
+
+	public static MessagingServiceSystem serviceInstanceToGet ;
 
 
-	protected MessagingServiceSystem() {
+	private MessagingServiceSystem() {
 	}
  
-	public static MessagingServiceSystem getInstance() {
-		if (serviceInstance == null) {
-			synchronized (MessagingServiceSystem.class) {
-				if (serviceInstance == null) {
-					serviceInstance = new MessagingServiceSystem();
-				}
-			}
-		}
-		return serviceInstance;
-	}
 	
 	/**
 	 * Add message to the priority queue by message type.
@@ -82,8 +74,7 @@ public class MessagingServiceSystem {
 	public Message pollMessageByType(String type) {
 		Map<String,Queue<Message>> messageQueue = MessageQueue.messageQueue;
 		if(type!=null && !type.isEmpty()){
-			synchronized (messageQueue) {
-				Queue<Message> messagesByType = messageQueue.get(type);
+			Queue<Message> messagesByType = messageQueue.get(type);
 			if(messagesByType !=null && !messagesByType.isEmpty()){
 				synchronized (this) {
 					return messagesByType.poll();
@@ -93,8 +84,31 @@ public class MessagingServiceSystem {
 				return null;
 			}
 		}
-		}
 		return null;
 	}
+	
+	
+	public static MessagingServiceSystem getInstanceToAdd() {
+		if (serviceInstanceToAdd == null) {
+			synchronized (MessagingServiceSystem.class) {
+				if (serviceInstanceToAdd == null) {
+					serviceInstanceToAdd = new MessagingServiceSystem();
+				}
+			}
+		}
+		return serviceInstanceToAdd;
+	}
+	
+	public static MessagingServiceSystem getInstanceToPoll() {
+		if (serviceInstanceToGet == null) {
+			synchronized (MessagingServiceSystem.class) {
+				if (serviceInstanceToGet == null) {
+					serviceInstanceToGet = new MessagingServiceSystem();
+				}
+			}
+		}
+		return serviceInstanceToGet;
+	}
+
 
 }

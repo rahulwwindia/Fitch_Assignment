@@ -16,8 +16,8 @@ import com.ms.model.Message;
 import com.ms.model.MessageValidator;
 
 /**
- * <h1>Message Producer</h1> Message producer has two web service to add and
- * consume messages from queue.
+ * <h1>Message Producer</h1> Message producer service is use to add and
+ * consume messages to queue.
  * 
  * @author Rahul Mahajan
  * @version 1.0
@@ -43,7 +43,7 @@ public class MessageProducer {
 		Response response = null;
 		Message message = gson.fromJson(data, Message.class);
 		if (MessageValidator.isValidMessage(message)) {
-			String responseMessage = MessagingServiceSystem.getInstance().addMessage(message);
+			String responseMessage = MessagingServiceSystem.getInstanceToAdd().addMessage(message);
 			status = Status.OK;
 			response = Response.status(status).entity(responseMessage).build();
 		} else {
@@ -66,7 +66,7 @@ public class MessageProducer {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String pollMessage(@PathParam("messageType") String messageType) {
 
-		Message responseMessage = MessagingServiceSystem.getInstance().pollMessageByType(messageType);
+		Message responseMessage = MessagingServiceSystem.getInstanceToPoll().pollMessageByType(messageType);
 		if (responseMessage != null)
 			return "Message :" + responseMessage.getMessageDescription() + "  Added In Queue on Time:"
 					+ responseMessage.getTimestamp();

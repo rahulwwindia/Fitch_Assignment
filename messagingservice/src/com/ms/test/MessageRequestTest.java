@@ -22,7 +22,7 @@ public class MessageRequestTest {
 	 * @return the message
 	 */
 	@Test
-	//@Ignore
+	@Ignore
 	public void getMessage() {
 		TestUtility.getMessageClinet("red");
 	}
@@ -31,7 +31,7 @@ public class MessageRequestTest {
 	 * Adds the message.
 	 */
 	@Test
-	//@Ignore
+	@Ignore
 	public void addMessage() {
 		Message message = new Message("Red is the ultimate cure for sadness.", "red", 1);
 		TestUtility.addMessageClient(message);
@@ -43,15 +43,15 @@ public class MessageRequestTest {
 	 * FIFO order.
 	 */
 	@Test
-	@Ignore
+	//@Ignore
 	public void consumeProduceMultiThreadMessages() {
 
 		Thread thread1 = new Thread(new ProduceMessages(1));
 		Thread thread3 = new Thread(new ProduceMessages(1));
 		Thread thread2 = new Thread(new ConsumeMessages("red"));
-		// thread1.start();
+		thread1.start();
 		thread2.start();
-		// thread3.start();
+		thread3.start();
 
 		try {
 			Thread.currentThread().sleep(2000);
